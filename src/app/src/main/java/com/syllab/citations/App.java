@@ -8,7 +8,7 @@ public class App {
 
         // "[A-Z].*\." \w+ \([-0-9]+\)
 
-        /* Valider
+        /* Valider */
         var citation = Pattern.compile("\"[A-Z].*\\.\" \\w+ \\([-0-9]+\\)");
         if(citation.matcher(texte).matches()) {
             System.out.println("C'est une citation.");
@@ -16,9 +16,9 @@ public class App {
         else {
             System.out.println("Ce texte ne semble pas être une citation.");
         }
-        */
+        
 
-        /* Trouver
+        /* Trouver */
         var nombre = Pattern.compile("\\d+");
         var occurenceNombre = nombre.matcher(texte);
         var compteur = 0;
@@ -27,9 +27,9 @@ public class App {
             compteur++;
         }
         System.out.printf("%d nombres ont été trouvés.\n", compteur);
-        */
+        
 
-        /* Extraire
+        /* Extraire */
         var construction = Pattern.compile("l'amour (\\w+), qui vous rend (\\w+)");
         var occurence = construction.matcher(texte);
 
@@ -41,6 +41,6 @@ public class App {
                 occurence.group(2)
             );
         }
-        */
+        
     }
 }
