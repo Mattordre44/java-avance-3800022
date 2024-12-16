@@ -17,32 +17,39 @@ public class App {
         var cheminBin = Path.of("./liste.bin");
 
         // Sérialisation
-        try(var out = Files.newOutputStream(cheminBin))
-        {
-            
-        }
-        catch (IOException e) {
+        try(
+            var out = Files.newOutputStream(cheminBin); 
+            var serializer = new ObjectOutputStream(out)
+        ) {
+            serializer.writeObject(animalerie);
+        } catch (IOException e) {
             e.printStackTrace(System.err);
         }
         
         // Désérialisation
-        try(var in = Files.newInputStream(cheminBin))
-        {
-            var animalerie2 = animalerie;
+        try(
+            var in = Files.newInputStream(cheminBin);
+            var deserializer = new ObjectInputStream(in)
+        ) {
+            var animalerie2 = (Animalerie) deserializer.readObject();
 
             Arrays
                 .stream(animalerie2.getAnimaux())
                 .forEach(System.out::println);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
+            e.printStackTrace(System.err);
+        } catch (ClassNotFoundException e) {
             e.printStackTrace(System.err);
         }
             
         // Sérialisation XML
-        try(var outXml = Files.newOutputStream(Path.of("./liste.xml"))) {
-            // 
-        }
-        catch (IOException e) {
+        try(
+            var outXml = Files.newOutputStream(Path.of("./liste.xml"));
+            var encoder = new XMLEncoder(outXml)
+        ) {
+            encoder.writeObject(animalerie);
+            encoder.flush();
+        } catch (IOException e) {
             e.printStackTrace(System.err);
         }
     }
